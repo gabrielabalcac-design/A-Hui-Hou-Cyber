@@ -1,0 +1,7 @@
+{
+  "name": "a-hui-hou-cyber",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
