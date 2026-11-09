@@ -1,37 +1,39 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
+/* src/global.scss o variables de color */
+:root {
+  --ion-color-primary: #2B587D;           /* Azul oscuro / verde azulado */
+  --ion-color-primary-rgb: 43, 88, 125;
+  
+  --ion-color-secondary: #2B7C59;         /* Verde oscuro */
+  --ion-color-secondary-rgb: 43, 124, 89;
 
-/* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
+  --ion-color-success: #7AA77A;           /* Verde claro / hojas */
+  --ion-color-success-rgb: 122, 167, 122;
 
-/* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
+  --ion-color-warning: #C18F6B;           /* Marrón claro / nuez */
+  --ion-color-warning-rgb: 193, 143, 107;
 
-/* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
+  --ion-color-danger: #9E5D3B;            /* Marrón rojizo / nuez */
+  --ion-color-danger-rgb: 158, 93, 59;
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+  --ion-color-light-shade: #D6C5B2;       /* Beige / nuez */
+}
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* Forzar que toda la aplicación y vistas utilicen tu color marrón rojizo (#9E5D3B) como fondo por defecto */
+ion-app,
+ion-router-outlet,
+app-root {
+  background-color: #9E5D3B !important;
+}
+
+ion-content {
+  --background: #9E5D3B !important;
+  background-color: #9E5D3B !important;
+  color: #ffffff !important;
+}
+
+/* Los campos de texto siempre con texto oscuro legible (evita texto blanco sobre fondo blanco en modo oscuro del sistema) */
+input:not([type="checkbox"]):not([type="range"]),
+textarea,
+select {
+  color: #2B3A4A;
+}

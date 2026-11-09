@@ -1,0 +1,20 @@
+{
+  "WELCOME": "Bienvenido",
+  "LOGIN": "Iniciar Sesión",
+  "COURSES": "Cursos",
+  "GAMES": "Juegos",
+  "PROFILE": "Perfil",
+  "COURSES_HEADER_TITLE": "Módulos de Cursos",
+  "CATALOG_TITLE": "Catálogo de Seguridad",
+  "CATALOG_DESC": "Selecciona un curso para iniciar tus casos de estudio interactivos.",
+  "PODCAST": {
+    "TITLE": "Ciberseguridad Avanzada & Podcasts",
+    "SEARCH_PLACEHOLDER": "Buscar episodios, amenazas o fuentes...",
+    "LOCAL_EPISODES": "Episodios Locales Seleccionados",
+    "LOCAL_DESC": "Reproduce las transmisiones y análisis tácticos en alta fidelidad.",
+    "GLOBAL_DIRECTORY": "Directorio Global de Fuentes y Podcasts",
+    "GLOBAL_DESC": "Explora plataformas especializadas de habla hispana e internacional recomendadas por expertos.",
+    "VISIT": "Visitar",
+    "NO_RESULTS": "No se encontraron episodios ni fuentes con ese criterio de búsqueda."
+  }
+}

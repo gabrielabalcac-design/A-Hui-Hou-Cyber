@@ -1,0 +1,274 @@
+<ion-content [fullscreen]="true">
+  
+  <!-- ================= VISTA 1: LISTA DE CURSOS ================= -->
+  <div *ngIf="!selectedCourse" class="modules-wrapper">
+    
+    <app-header [heading]="getTr('HEADER')"></app-header>
+
+    <main class="app-content">
+      <div class="modules-container">
+        
+        <div class="intro-section">
+          <h3>{{ getTr('CAT_TITLE') }}</h3>
+          <p>{{ getTr('CAT_DESC') }}</p>
+        </div>
+
+        <!-- ================= NIVEL 1: FUNDAMENTOS ================= -->
+        <div class="level-section" *ngIf="fundamentoCourses.length > 0">
+          <div class="level-section-header">
+            <span class="level-indicator-dot fundamento"></span>
+            <h3>Nivel 1: Fundamentos de Ciberseguridad</h3>
+          </div>
+
+          <div class="courses-list">
+            <div *ngFor="let course of fundamentoCourses" 
+                 (click)="isUnlocked(course['id']) && openCourse(course)"
+                 class="course-card"
+                 [class.locked-card]="!isUnlocked(course['id'])"
+                 [class.unlocked-card]="isUnlocked(course['id'])">
+              
+              <div class="course-icon-box" [style.background-color]="isUnlocked(course['id']) ? getBadgeColor(course['level']) : '#94a3b8'">
+                <span class="emoji-icon">{{ isUnlocked(course['id']) ? '📖' : '🔒' }}</span>
+              </div>
+              
+              <div class="course-info" *ngIf="getLocalizedCourse(course) as locCourse">
+                <div class="course-header-row">
+                  <h4>{{ locCourse['id'] }}. {{ locCourse['title'] }}</h4>
+                  <span class="level-badge" [class.badge-locked]="!isUnlocked(course['id'])">
+                    {{ isUnlocked(course['id']) ? locCourse['level'] : 'Bloqueado' }}
+                  </span>
+                </div>
+                <p>{{ locCourse['description'] }}</p>
+                
+                <div class="course-arrow-bottom">
+                  <span>{{ isUnlocked(course['id']) ? '➔' : '🔒 Requiere módulo anterior' }}</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= NIVEL 2: INTERMEDIO ================= -->
+        <div class="level-section" *ngIf="intermedioCourses.length > 0">
+          <div class="level-section-header">
+            <span class="level-indicator-dot intermedio"></span>
+            <h3>Nivel 2: Intermedio y Operacional</h3>
+          </div>
+
+          <div class="courses-list">
+            <div *ngFor="let course of intermedioCourses" 
+                 (click)="isUnlocked(course['id']) && openCourse(course)"
+                 class="course-card"
+                 [class.locked-card]="!isUnlocked(course['id'])"
+                 [class.unlocked-card]="isUnlocked(course['id'])">
+              
+              <div class="course-icon-box" [style.background-color]="isUnlocked(course['id']) ? getBadgeColor(course['level']) : '#94a3b8'">
+                <span class="emoji-icon">{{ isUnlocked(course['id']) ? '⚙️' : '🔒' }}</span>
+              </div>
+              
+              <div class="course-info" *ngIf="getLocalizedCourse(course) as locCourse">
+                <div class="course-header-row">
+                  <h4>{{ locCourse['id'] }}. {{ locCourse['title'] }}</h4>
+                  <span class="level-badge" [class.badge-locked]="!isUnlocked(course['id'])">
+                    {{ isUnlocked(course['id']) ? locCourse['level'] : 'Bloqueado' }}
+                  </span>
+                </div>
+                <p>{{ locCourse['description'] }}</p>
+                
+                <div class="course-arrow-bottom">
+                  <span>{{ isUnlocked(course['id']) ? '➔' : '🔒 Requiere módulo anterior' }}</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= NIVEL 3: AVANZADO / ÉLITE ================= -->
+        <div class="level-section" *ngIf="avanzadoCourses.length > 0">
+          <div class="level-section-header">
+            <span class="level-indicator-dot avanzado"></span>
+            <h3>Nivel 3: Avanzado y Especialización SOC</h3>
+          </div>
+
+          <div class="courses-list">
+            <div *ngFor="let course of avanzadoCourses" 
+                 (click)="isUnlocked(course['id']) && openCourse(course)"
+                 class="course-card"
+                 [class.locked-card]="!isUnlocked(course['id'])"
+                 [class.unlocked-card]="isUnlocked(course['id'])">
+              
+              <div class="course-icon-box" [style.background-color]="isUnlocked(course['id']) ? getBadgeColor(course['level']) : '#94a3b8'">
+                <span class="emoji-icon">{{ isUnlocked(course['id']) ? '🛡️' : '🔒' }}</span>
+              </div>
+              
+              <div class="course-info" *ngIf="getLocalizedCourse(course) as locCourse">
+                <div class="course-header-row">
+                  <h4>{{ locCourse['id'] }}. {{ locCourse['title'] }}</h4>
+                  <span class="level-badge" [class.badge-locked]="!isUnlocked(course['id'])">
+                    {{ isUnlocked(course['id']) ? locCourse['level'] : 'Bloqueado' }}
+                  </span>
+                </div>
+                <p>{{ locCourse['description'] }}</p>
+                
+                <div class="course-arrow-bottom">
+                  <span>{{ isUnlocked(course['id']) ? '➔' : '🔒 Requiere módulo anterior' }}</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <div class="footer-nav-container">
+      <app-footer-nav activeTab="courses"></app-footer-nav>
+    </div>
+  </div>
+
+
+  <!-- ================= VISTA 2: DETALLE DEL CURSO Y EVALUACIÓN ================= -->
+  <div *ngIf="selectedCourse" class="detail-wrapper">
+    
+    <header class="detail-header-bar">
+      <button class="back-btn" (click)="backToList()">{{ getTr('BACK') }}</button>
+      <div class="detail-title-container">
+        <span class="course-mini-badge">{{ selectedCourse['level'] }}</span>
+        <h2>{{ selectedCourse['title'] }}</h2>
+      </div>
+    </header>
+
+    <div class="detail-content-container">
+      
+      <!-- Si el curso NO ha finalizado, mostramos la teoría y casos -->
+      <ng-container *ngIf="!isCompleted">
+        <!-- Tarjeta de Concepto Profesional Enriquecido -->
+        <div class="concept-professional-card">
+          <div class="concept-header-flex">
+            <h3>{{ getTr('KEY_CONCEPT') }}</h3>
+            <app-narration-controls
+              [text]="conceptNarrationText"
+              [key]="conceptKey"
+              [lang]="contentLang">
+            </app-narration-controls>
+          </div>
+          <p class="lang-note" *ngIf="showLangNote">
+            This course isn't translated yet: content and narration are in Spanish.
+          </p>
+          <p>{{ selectedCourse['concept'] }}</p>
+          
+          <div class="expert-tip-box">
+            <span class="tip-icon">🛡️</span>
+            <div>
+              <strong>{{ getTr('EXPERT_TIP') }}</strong> {{ selectedCourse['expertTip'] }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Análisis Extendido -->
+        <div class="concept-professional-card" *ngIf="selectedCourse['extendedOverview']">
+          <div class="concept-header-flex">
+            <h3>📖 Análisis Extendido</h3>
+          </div>
+          <p>{{ selectedCourse['extendedOverview'] }}</p>
+        </div>
+
+        <!-- Arquitectura o Flujo de Ataque -->
+        <div class="concept-professional-card" *ngIf="selectedCourse['architectureOrFlow'] && selectedCourse['architectureOrFlow'].length > 0">
+          <div class="concept-header-flex">
+            <h3>⚙️ Arquitectura y Flujo de Ataque</h3>
+          </div>
+          <ul style="padding-left: 20px; color: #475569; font-size: 14px; line-height: 1.6;">
+            <li *ngFor="let step of selectedCourse['architectureOrFlow']" style="margin-bottom: 8px;">{{ step }}</li>
+          </ul>
+        </div>
+
+        <!-- Estrategias de Defensa -->
+        <div class="concept-professional-card" *ngIf="selectedCourse['defenseStrategies'] && selectedCourse['defenseStrategies'].length > 0">
+          <div class="concept-header-flex">
+            <h3>🛡️ Estrategias de Defensa y Mitigación</h3>
+          </div>
+          <ul style="padding-left: 20px; color: #475569; font-size: 14px; line-height: 1.6;">
+            <li *ngFor="let defense of selectedCourse['defenseStrategies']" style="margin-bottom: 8px;">{{ defense }}</li>
+          </ul>
+        </div>
+
+        <!-- Tarjeta de Caso de Estudio Interactivo -->
+        <div class="cases-section" *ngIf="currentCase">
+          <div class="case-professional-card">
+            
+            <div class="case-top-bar">
+              <span class="case-counter-tag">Caso {{ currentCaseIndex + 1 }} / {{ selectedCourse['cases'].length }}</span>
+              <app-narration-controls
+                [text]="caseNarrationText"
+                [key]="caseKey"
+                [lang]="contentLang"
+                [showAuto]="false">
+              </app-narration-controls>
+            </div>
+
+            <h4 class="case-main-title">{{ currentCase['title'] }}</h4>
+            <p class="narrative-bubble">{{ currentCase['narrative'] }}</p>
+            
+            <div class="question-container">
+              <h5>{{ currentCase['question'] }}</h5>
+              
+              <div class="options-grid">
+                <button *ngFor="let option of currentCase['options']" 
+                        class="option-pro-btn"
+                        [class.correct]="selectedOption === option && option['isCorrect']"
+                        [class.incorrect]="selectedOption === option && !option['isCorrect']"
+                        [disabled]="isAnswered"
+                        (click)="selectOption(option)">
+                  {{ option['text'] }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Feedback y Siguiente Paso -->
+            <div class="feedback-pro-box" *ngIf="isAnswered">
+              <p [class.success-text]="isCorrectAnswer" [class.error-text]="!isCorrectAnswer">
+                {{ feedbackMessage }}
+              </p>
+              <button class="next-case-pro-btn" (click)="nextCase()">
+                {{ currentCaseIndex < selectedCourse['cases'].length - 1 ? getTr('NEXT_CASE') : getTr('COMPLETE') }}
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Pantalla de Resultados y Puntaje Final (SOC Victory Card) -->
+      <div *ngIf="isCompleted" class="soc-victory-card">
+        <div class="soc-victory-glow"></div>
+        
+        <div class="soc-victory-header">
+          <div class="soc-trophy-icon-container">
+            <span class="soc-trophy-emoji">🏆</span>
+          </div>
+          <span class="soc-success-telemetry-tag">STATUS: 200 OK // MODULE_CLEARED</span>
+        </div>
+
+        <h3 class="soc-victory-title">{{ getTr('CONGRATS') }}</h3>
+        <p class="soc-victory-desc">Has superado todos los vectores de evaluación y telemetría de este módulo de forma exitosa.</p>
+        
+        <div class="soc-score-box">
+          <span class="soc-score-label">{{ getTr('FINAL_SCORE') }}</span>
+          <span class="soc-score-value">{{ score }} <small>pts</small></span>
+        </div>
+
+        <div class="soc-victory-actions">
+          <button class="soc-catalog-btn" (click)="backToList()">
+            {{ getTr('RESTART') }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>

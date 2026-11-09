@@ -19,13 +19,22 @@
     "@angular/forms": "22.0.1",
     "@angular/platform-browser": "22.0.1",
     "@angular/router": "22.0.1",
+    "@capacitor/android": "8.5.1",
     "@capacitor/app": "8.1.1",
     "@capacitor/core": "8.5.1",
     "@capacitor/haptics": "8.0.2",
     "@capacitor/keyboard": "8.0.5",
     "@capacitor/status-bar": "8.0.3",
+    "@emailjs/browser": "^5.0.3",
     "@ionic/angular": "^9.0.0",
+    "@ngx-translate/core": "^18.0.0",
+    "@ngx-translate/http-loader": "^18.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "firebase": "^13.2.0",
     "ionicons": "^8.1.0",
+    "mongoose": "^9.12.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -43,5 +52,9 @@
     "typescript-eslint": "^8.61.0",
     "vitest": "^4.0.8"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "main": "eslint.config.js",
+  "keywords": [],
+  "license": "ISC",
+  "type": "commonjs"
 }

@@ -1,0 +1,20 @@
+{
+  "WELCOME": "Welcome",
+  "LOGIN": "Log In",
+  "COURSES": "Courses",
+  "GAMES": "Games",
+  "PROFILE": "Profile",
+  "COURSES_HEADER_TITLE": "Course Modules",
+  "CATALOG_TITLE": "Security Catalog",
+  "CATALOG_DESC": "Select a course to start your interactive case studies.",
+  "PODCAST": {
+    "TITLE": "Advanced Cybersecurity & Podcasts",
+    "SEARCH_PLACEHOLDER": "Search episodes, threats or sources...",
+    "LOCAL_EPISODES": "Selected Local Episodes",
+    "LOCAL_DESC": "Play high-fidelity tactical broadcasts and analysis.",
+    "GLOBAL_DIRECTORY": "Global Directory of Sources and Podcasts",
+    "GLOBAL_DESC": "Explore specialized Spanish and international platforms recommended by experts.",
+    "VISIT": "Visit",
+    "NO_RESULTS": "No episodes or sources found matching your search criteria."
+  }
+}

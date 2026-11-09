@@ -1,0 +1,121 @@
+<ion-content class="ion-padding">
+  <!-- Botón de navegación superior -->
+  <div class="top-nav">
+    <ion-button fill="outline" size="small" (click)="goBack()">
+      {{ getTr('BACK') }}
+    </ion-button>
+    <div class="badges-container" *ngIf="course">
+      <span class="level-badge" [style.background-color]="getBadgeColor(course.level)">
+        {{ course.level | uppercase }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Si el curso está cargado -->
+  <div *ngIf="course; else loading">
+    <h1 class="course-title">{{ course.title }}</h1>
+    <p class="course-description">{{ course.description }}</p>
+
+    <!-- Tarjeta de Concepto Clave y Estrategia Experta -->
+    <div class="card concept-card">
+      <div class="card-header-row">
+        <h3>💡 {{ getTr('KEY_CONCEPT') }}</h3>
+        <app-narration-controls 
+          [text]="conceptNarrationText" 
+          [lang]="contentLang" 
+          [uniqueKey]="conceptKey">
+        </app-narration-controls>
+      </div>
+      <p>{{ course.concept }}</p>
+
+      <div class="expert-tip-box" *ngIf="course.expertTip">
+        <span class="shield-icon">🛡️</span>
+        <div>
+          <strong>{{ getTr('EXPERT_TIP') }}</strong> {{ course.expertTip }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Análisis Extendido (Opcional si existe) -->
+    <div class="card extended-overview-card" *ngIf="course.extendedOverview">
+      <h3>📖 Análisis Extendido</h3>
+      <p>{{ course.extendedOverview }}</p>
+    </div>
+
+    <!-- Arquitectura o Flujo de Ataque -->
+    <div class="card architecture-card" *ngIf="course.architectureOrFlow && course.architectureOrFlow.length > 0">
+      <h3>⚙️ Arquitectura y Flujo de Ataque</h3>
+      <ul>
+        <li *ngFor="let step of course.architectureOrFlow">{{ step }}</li>
+      </ul>
+    </div>
+
+    <!-- Estrategias de Defensa -->
+    <div class="card defense-card" *ngIf="course.defenseStrategies && course.defenseStrategies.length > 0">
+      <h3>🛡️ Estrategias de Defensa y Mitigación</h3>
+      <ul>
+        <li *ngFor="let defense of course.defenseStrategies">{{ defense }}</li>
+      </ul>
+    </div>
+
+    <!-- Sección de Casos de Estudio Interactivos -->
+    <div class="cases-section" *ngIf="currentCase">
+      <div class="case-header-row">
+        <span class="case-counter">CASO {{ currentCaseIndex + 1 }} / {{ course.cases.length }}</span>
+        <app-narration-controls 
+          [text]="caseNarrationText" 
+          [lang]="contentLang" 
+          [uniqueKey]="caseKey">
+        </app-narration-controls>
+      </div>
+
+      <h2 class="case-title">{{ currentCase.title }}</h2>
+
+      <div class="narrative-box">
+        <p>{{ currentCase.narrative }}</p>
+      </div>
+
+      <h4 class="question-text">{{ currentCase.question }}</h4>
+
+      <!-- Opciones de respuesta -->
+      <div class="options-list">
+        <div 
+          class="option-card" 
+          *ngFor="let option of currentCase.options; let i = index"
+          [class.selected]="selectedOption === option"
+          [class.correct]="isAnswered && option.isCorrect"
+          [class.incorrect]="isAnswered && selectedOption === option && !option.isCorrect"
+          (click)="!isAnswered && selectOption(option)">
+          <span class="option-letter">{{ i + 1 }}</span>
+          <span class="option-text">{{ option.text }}</span>
+        </div>
+      </div>
+
+      <!-- Feedback al responder -->
+      <div class="feedback-container" *ngIf="isAnswered" [class.success]="isCorrectAnswer" [class.error]="!isCorrectAnswer">
+        <p><strong>{{ isCorrectAnswer ? '¡Correcto!' : 'Incorrecto.' }}</strong> {{ feedbackMessage }}</p>
+      </div>
+
+      <!-- Botón Siguiente Caso / Finalizar -->
+      <div class="footer-actions" *ngIf="isAnswered">
+        <ion-button expand="block" color="primary" (click)="nextCase()">
+          {{ currentCaseIndex < course.cases.length - 1 ? getTr('NEXT_CASE') : getTr('COMPLETE') }}
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Pantalla de Finalización del Curso -->
+    <div class="completion-card" *ngIf="isCompleted">
+      <h2>🏆 {{ getTr('CONGRATS') }}</h2>
+      <p>{{ getTr('FINAL_SCORE') }} <strong>{{ score }} / {{ course.cases.length * 10 }}</strong></p>
+      <ion-button expand="block" color="success" (click)="backToList()">
+        {{ getTr('RESTART') }}
+      </ion-button>
+    </div>
+
+  </div>
+
+  <ng-template #loading>
+    <p class="loading-text">Cargando detalles del módulo...</p>
+  </ng-template>
+</ion-content>
